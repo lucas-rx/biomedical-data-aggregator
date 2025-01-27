@@ -1,6 +1,4 @@
-# GMD(Gestion des Masses de Données, French for Big Data)
-
-Development of a biomedical data integration system.
+# Development of a biomedical data integration system
 
 ## Contributors
 - ALONZO Léo
