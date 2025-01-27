@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Quick my symptom</title>
+    <link rel="stylesheet" type="text/css" href={{url_for('static', filename='css/style.css')}}>
+</head>
+<body>
+<header>
+    <div class="search-container">
+        <form action="/search" method="post">
+            <input type="text" placeholder="Symptoms..." name="symptoms" value="{{ symptoms }}">
+            <button type="submit">Search</button>
+        </form>
+        {% if nb_disease %}
+            <div class="nb-results">{{ nb_disease + nb_side_effect + nb_drug }} results found</div>
+        {% endif %}
+        <div class="circle-loader-search-container">
+            <div class="circle-loader search">
+                <div class="checkmark draw"></div>
+            </div>
+        </div>
+    </div>
+    <nav>
+        <ul>
+            <li class="active" data-value="1">Diseases</li>
+            <li data-value="2">Side effects</li>
+            <li data-value="3">Drugs</li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <section id="tab-1" class="tab-content active">
+        {% if nb_disease %}
+            <div class="info">{{ nb_disease }} diseases found causing this symptoms</div>
+        {% endif %}
+        <div class="card-container">
+            {% for element, mentions in results['disease'].items() %}
+                <div class="card">
+                    <h2>{{ element }}</h2>
+                    {%  for db in mentions %}
+                        {% if not loop.first %}
+                            <hr/>
+                        {% endif %}
+                        <div class="mentions-holder">
+                            <p>{{ db[0] }}</p>
+                            <p class="mentions">Number of mentions : {{ db[1] }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    <section id="tab-2" class="tab-content">
+        {% if nb_side_effect %}
+            <div class="info">{{ nb_side_effect }} drugs found with this side effect</div>
+        {% endif %}
+        <div class="card-container">
+            {% for element, mentions in results['side_effect'].items() %}
+                <div class="card">
+                    <h2>{{ element }}</h2>
+                    {%  for db in mentions %}
+                        {% if not loop.first %}
+                            <hr/>
+                        {% endif %}
+                        <div class="mentions-holder">
+                            <p>{{ db[0] }}</p>
+                            <p class="mentions">Number of mentions : {{ db[1] }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    <section id="tab-3" class="tab-content">
+        {% if nb_drug %}
+            <div class="info">{{ nb_drug }} drugs found to cure the diseases</div>
+        {% endif %}
+        <div class="card-container">
+            {% for element, mentions in results['drug'].items() %}
+                <div class="card">
+                    <h2>{{ element }}</h2>
+                    {%  for db in mentions %}
+                        {% if not loop.first %}
+                            <hr/>
+                        {% endif %}
+                        <div class="mentions-holder">
+                            <p>{{ db[0] }}</p>
+                            <p class="mentions">Number of mentions : {{ db[1] }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <div class="modal">
+        <div class="modal-content">
+            <h1>Loading data...</h1>
+            <div class="loader">
+                <p>DrugBank</p>
+                <div class="circle-loader drugbank">
+                    <div class="checkmark draw"></div>
+                </div>
+            </div>
+            <div class="loader">
+                <p>OMIM</p>
+                <div class="circle-loader omim">
+                    <div class="checkmark draw"></div>
+                </div>
+            </div>
+            <div class="loader">
+                <p>MedDRA</p>
+                <div class="circle-loader meddra">
+                    <div class="checkmark draw"></div>
+                </div>
+            </div>
+            <div class="loader">
+                <p>STITCH</p>
+                <div class="circle-loader stitch">
+                    <div class="checkmark draw"></div>
+                </div>
+            </div>
+            <div class="loader">
+                <p>ATC</p>
+                <div class="circle-loader atc">
+                    <div class="checkmark draw"></div>
+                </div>
+            </div>
+            <div class="loader">
+                <p>HPO</p>
+                <div class="circle-loader hpo">
+                    <div class="checkmark draw"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script type="module" defer src={{url_for('static', filename='js/script.js')}}></script>
+{% if load %}
+    <script type="module" defer src={{url_for('static', filename='js/loading.js')}}></script>
+{% endif %}
+</body>
+</html>
