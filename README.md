@@ -1,7 +1,8 @@
-# GMD
+# GMD(Gestion des Masses de Données, French for Big Data)
 
-GMD Project (2A): Development of a biomedical data integration system.
-Contributors:
+Development of a biomedical data integration system.
+
+## Contributors
 - ALONZO Léo
 - DÉNÈS François
 - RIOUX Lucas
@@ -15,6 +16,7 @@ Contributors:
 ## Launch the app
 
 NOTE : the data is currently unavailable.
+
 Put all the data files in a `data` repository, at the root of this git repository.
 
 Run the file in web/app.py
